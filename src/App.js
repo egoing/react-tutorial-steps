@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 import Article from "./components/Article";
 import Header from "./components/Header";
@@ -16,6 +16,23 @@ export default function App() {
     { id: 2, title: "css", description: "css is..." },
     { id: 3, title: "js", description: "js is..." }
   ]);
+  useEffect(function(){
+    var p = window.location.pathname;
+    if(p === '/'){
+      setMode('WELCOME');
+    } else {
+      var paths = window.location.pathname.split('/');
+      if(paths[1] === 'create'){
+        setMode('CREATE');
+      } else if(paths[1] === 'update') {
+        setMode('UPDATE');
+        setSelectedId(Number(paths[2]));
+      } else if(paths[1] === 'read'){
+        setMode('READ');
+        setSelectedId(Number(paths[2]));
+      }
+    }
+  }, []);
   var article = null;
   if (mode === "WELCOME") {
     article = <Article title="Welcome" description="Hello, WEB" />;
@@ -39,6 +56,7 @@ export default function App() {
           setSelectedId(nextId);
           setMode("READ");
           setNextId(nextId + 1);
+            window.history.pushState({}, '', '/'+topic_id);
         }}
       />
     );
@@ -73,6 +91,7 @@ export default function App() {
       <Header
         onChangeMode={function() {
           setMode("WELCOME");
+          window.history.pushState({}, '', '/');
         }}
       />
       <Nav
@@ -80,11 +99,17 @@ export default function App() {
         onChangeMode={function(topic_id) {
           setMode("READ");
           setSelectedId(topic_id);
+          window.history.pushState({}, '', '/read/'+topic_id);
         }}
       />
       {article}
       <Control
         onChangeMode={function(mode) {
+          if(mode === 'CREATE'){
+            window.history.pushState({}, '', '/create');
+          } else if(mode === 'UPDATE'){
+            window.history.pushState({}, '', '/update/'+selectedId);
+          }
           if (mode === "DELETE") {
             var newTopics = [];
             for (var i = 0; i < topics.length; i++) {
@@ -94,7 +119,6 @@ export default function App() {
                 newTopics.push(topics[i]);
               }
             }
-            console.log(newTopics);
             setTopics(newTopics);
             mode = "WELCOME";
           }
