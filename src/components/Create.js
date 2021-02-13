@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+
 export default function Create(props) {
   return (
     <article>
@@ -6,7 +7,7 @@ export default function Create(props) {
       <form
         action="topics"
         method="post"
-        onSubmit={function(e) {
+        onSubmit={function (e) {
           e.preventDefault();
           props.onCreate({
             title: e.target.title.value,
@@ -16,13 +17,13 @@ export default function Create(props) {
         }}
       >
         <p>
-          <input type="text" name="title" placeholder="title" />
+          <input type="text" name="title" placeholder="title"/>
         </p>
         <p>
-          <textarea name="description" placeholder="description" />
+          <textarea name="description" placeholder="description"/>
         </p>
         <p>
-          <input type="submit" />
+          <input type="submit"/>
         </p>
       </form>
     </article>

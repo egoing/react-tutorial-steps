@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
+
 export default function Update(props) {
   var [title, setTitle] = useState(props.data.title);
   var [description, setDescription] = useState(props.data.description);
@@ -8,7 +9,7 @@ export default function Update(props) {
       <form
         action="topics"
         method="put"
-        onSubmit={function(e) {
+        onSubmit={function (e) {
           e.preventDefault();
           props.onUpdate({
             id: props.data.id,
@@ -24,7 +25,7 @@ export default function Update(props) {
             name="title"
             placeholder="title"
             value={title}
-            onChange={function(e) {
+            onChange={function (e) {
               setTitle(e.target.value);
             }}
           />
@@ -34,13 +35,13 @@ export default function Update(props) {
             name="description"
             placeholder="description"
             value={description}
-            onChange={function(e) {
+            onChange={function (e) {
               setDescription(e.target.value);
             }}
           />
         </p>
         <p>
-          <input type="submit" />
+          <input type="submit"/>
         </p>
       </form>
     </article>

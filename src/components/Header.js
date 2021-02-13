@@ -1,17 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
+import {Link} from "react-router-dom";
+
 export default function Header(props) {
   return (
     <header>
       <h1>
-        <a
-          href="/"
-          onClick={function(e) {
-            e.preventDefault();
-            props.onChangeMode();
-          }}
-        >
-          WEB
-        </a>
+        <Link to="/">WEB</Link>
       </h1>
     </header>
   );
